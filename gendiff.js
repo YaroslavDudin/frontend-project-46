@@ -1,7 +1,9 @@
 const { Command } = require('commander');   
 const program = new Command();
 program
-  .name('gendiff')
+  .name('gendiff ')
   .description('Compares two configuration files and shows a difference.')
   .version('"12.0.0"')
+  .option('-f, --format [type]', 'output format')
+  .usage('[options] <filepath1> <filepath2>')
 program.parse();
