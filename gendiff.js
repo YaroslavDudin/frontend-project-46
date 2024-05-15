@@ -2,6 +2,7 @@ import { Command } from 'commander';
 const program = new Command();
 import { readFileSync } from 'node:fs';
 import _ from 'lodash';
+import   genDiff   from './index.js';
 program
   .name('gendiff ')
   .description('Compares two configuration files and shows a difference.')
@@ -13,24 +14,6 @@ program
   .action((filepath1, filepath2,format = 'utf-8') => {
     const file1 = readFileSync(filepath1, format);
     const file2 = readFileSync(filepath2, format);
-    const genDiff = (data1, data2) => {
-      const keys = _.union(Object.keys(data1), Object.keys(data2)).sort();
-      
-      const diffLines = keys.map((key) => {
-        if (!_.has(data1, key)) {
-          return `+ ${key}: ${data2[key]}`;
-        }
-        if (!_.has(data2, key)) {
-          return `- ${key}: ${data1[key]}`;
-        }
-        if (data1[key] === data2[key]) {
-          return `  ${key}: ${data1[key]}`;
-        }
-        return `- ${key}: ${data1[key]}\n+ ${key}: ${data2[key]}`;
-      });
-      
-      return `{\n${diffLines.join('\n')}\n}`;
-    };
     console.log(genDiff(JSON.parse(file1), JSON.parse(file2)));
   })
 program.parse();
