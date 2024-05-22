@@ -11,7 +11,7 @@ run:
 	node gendiff ./__fixtures__/filepath1.json ./__fixtures__/filepath2.json
 
 test:
-	npm test --runInBand --bail
+	npm test 
 
 lint:
 	npx eslint .
