@@ -25,7 +25,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
 
 const formatValue = (value, depth) => {
     if (_.isObject(value)) {
-        return makeStylishDiff(value, value, depth + 2);
+        return makeStylishDiff(value, value, depth + 1);
     }
     return value;
 };
@@ -75,7 +75,7 @@ const formatter = (data1,data2,format) => {
           case 'plain':
             return makePlainDiff(data1,data2);
           case 'json':
-            return JSON.stringify(tree);
+            return JSON.stringify(data1, data2, null);
           default:
             throw new Error('invalid data');
         }

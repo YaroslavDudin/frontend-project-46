@@ -15,6 +15,9 @@
   "scripts": {
     "test": "jest --colors"
   },
+  "bin": {
+    "gendiff": "gendiff.js"
+  },
   "author": "luka0204",
   "license": "ISC",
   "devDependencies": {
