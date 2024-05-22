@@ -1,6 +1,6 @@
 import path from 'node:path';
 import parser from './parsers.js';
-import {MakeStylishDiff} from './formatter.js';
+import formatter from './formatter.js';
 import { readFileSync } from 'node:fs';
 
  const genDiff = (data1, data2, format = 'stylish') => {
@@ -20,7 +20,7 @@ import { readFileSync } from 'node:fs';
   const datan2 = getData(path2);
 
 
-  return MakeStylishDiff(datan1, datan2);
+  return formatter(datan1,datan2,format);
 };
 
 
