@@ -32,41 +32,41 @@ const formatValue = (value, depth) => {
 
 const makePlainDiff = (obj1, obj2) => {
     let diffOutput = '';
-  
+
     const formatValue = (value) => {
-      if (_.isObject(value)) {
-        return '[complex value]';
-      }
-      return `"${value}"`;
+        if (_.isObject(value)) {
+            return '[complex value]';
+        }
+        return `"${value}"`;
     };
-  
+
     const traverseObject = (obj1, obj2, prefix = '') => {
-      Object.keys(obj1).forEach((key) => {
-        const fullKey = prefix ? `${prefix}.${key}` : key;
-        if (!obj2.hasOwnProperty(key)) {
-          diffOutput += `Property '${fullKey}' was removed\n`;
-        } else if (_.isEqual(obj1[key], obj2[key])) {
-          // Property exists in both objects and their values are equal
-          // No action needed
-        } else if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
-          traverseObject(obj1[key], obj2[key], fullKey);
-        } else {
-          diffOutput += `Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}\n`;
-        }
-      });
-  
-      Object.keys(obj2).forEach((key) => {
-        const fullKey = prefix ? `${prefix}.${key}` : key;
-        if (!obj1.hasOwnProperty(key)) {
-          diffOutput += `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}\n`;
-        }
-      });
+        Object.keys(obj1).forEach((key) => {
+            const fullKey = prefix ? `${prefix}.${key}` : key;
+            if (!obj2.hasOwnProperty(key)) {
+                diffOutput += `Property '${fullKey}' was removed\n`;
+            } else if (_.isEqual(obj1[key], obj2[key])) {
+                // Property exists in both objects and their values are equal
+                // No action needed
+            } else if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
+                traverseObject(obj1[key], obj2[key], fullKey);
+            } else {
+                diffOutput += `Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}\n`;
+            }
+        });
+
+        Object.keys(obj2).forEach((key) => {
+            if (!obj1.hasOwnProperty(key)) {
+                const fullKey = prefix ? `${prefix}.${key}` : key;
+                diffOutput += `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}\n`;
+            }
+        });
     };
-  
+
     traverseObject(obj1, obj2);
-  
-    return diffOutput;
-  };
+
+    return diffOutput.trim();
+};
 
 const formatter = (data1,data2,format) => {
         switch (format) {
