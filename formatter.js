@@ -5,6 +5,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
     
     const diffLines = keys.map((key) => {
         const currentDepth = '  '.repeat(depth);
+        const nestedDepth = '  '.repeat(depth + 1);
         if (!_.has(obj1, key)) {
             return `${currentDepth}+ ${key}: ${formatValue(obj2[key], depth + 1)}`;
         }
@@ -12,12 +13,12 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
             return `${currentDepth}- ${key}: ${formatValue(obj1[key], depth + 1)}`;
         }
         if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
-            return `${currentDepth}  ${key}: ${makeStylishDiff(obj1[key], obj2[key], depth + 2)}`;
+            return `${currentDepth}  ${key}: {\n${nestedDepth}${makeStylishDiff(obj1[key], obj2[key], depth + 2)}\n${currentDepth}}`;
         }
         if (obj1[key] === obj2[key]) {
             return `${currentDepth}  ${key}: ${formatValue(obj1[key], depth + 2)}`;
         }
-        return `${currentDepth}- ${key}: ${formatValue(obj1[key], depth)}\n${currentDepth}+ ${key}: ${formatValue(obj2[key], depth)}`;
+        return `${currentDepth}- ${key}: ${formatValue(obj1[key], depth)}\n${currentDepth}+ ${key}: ${formatValue(obj2[key], depth + 1)}`;
     });
     
     return `{\n${diffLines.join('\n')}\n${'  '.repeat(depth - 1)}}`;
