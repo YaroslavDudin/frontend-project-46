@@ -25,7 +25,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
 
 const formatValue = (value, depth) => {
     if (_.isObject(value)) {
-        return makeStylishDiff(value, value, depth + 2);
+        return makeStylishDiff(value, value, depth + 1.5);
     }
     return value;
 };
