@@ -20,7 +20,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
         return `${currentDepth}- ${key}: ${formatValue(obj1[key], depth)}\n${currentDepth}+ ${key}: ${formatValue(obj2[key], depth)}`;
     });
     
-    return `{\n${diffLines.join('\n')}\n${'  '.repeat(depth - 1)}}`;
+    return `{\n  ${diffLines.join('\n')}\n ${'  '.repeat(depth - 1)}}`;
 };
 
 const formatValue = (value, depth) => {
