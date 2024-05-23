@@ -46,8 +46,7 @@ const makePlainDiff = (obj1, obj2) => {
             if (!obj2.hasOwnProperty(key)) {
                 diffOutput += `Property '${fullKey}' was removed\n`;
             } else if (_.isEqual(obj1[key], obj2[key])) {
-                // Property exists in both objects and their values are equal
-                // No action needed
+                diffOutput += `Property '${fullKey}' wasn't updated\n`;
             } else if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
                 traverseObject(obj1[key], obj2[key], fullKey);
             } else {
