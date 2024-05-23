@@ -24,12 +24,12 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
 };
 
 const formatValue = (value, depth) => {
-    const indentation = ''.repeat(depth + 3); // Добавляем два пробела для сдвига пары ключ-значение
     if (_.isObject(value)) {
-      return makeStylishDiff(value, value, depth + 1);
+        return makeStylishDiff(value, {}, depth + 1);
     }
-    return `${indentation}${value}`;
-  };
+    return value;
+};
+
 const makePlainDiff = (obj1, obj2) => {
     let diffOutput = '';
 
