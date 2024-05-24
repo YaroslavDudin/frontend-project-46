@@ -12,7 +12,7 @@ const genDiff = (data1, data2, format = 'stylish') => {
     format: getExtension(filePath),
   });
 
-  const path1 = resolvePath(data1);z
+  const path1 = resolvePath(data1);
   const path2 = resolvePath(data2);
 
   const datan1 = getData(path1);
