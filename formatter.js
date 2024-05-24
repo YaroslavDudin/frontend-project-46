@@ -44,7 +44,7 @@ const makePlainDiff = (obj1, obj2) => {
     const traverseObject = (obj1, obj2, prefix = '') => {
         Object.keys(obj1).forEach((key) => {
             const fullKey = prefix ? `${prefix}.${key}` : key;
-            if (!obj2.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
                 diffOutput.push(`Property '${fullKey}' was removed`);
             } else if (_.isEqual(obj1[key], obj2[key])) {
                 // Property exists in both objects and their values are equal
@@ -57,7 +57,7 @@ const makePlainDiff = (obj1, obj2) => {
         });
   
         Object.keys(obj2).forEach((key) => {
-            if (!obj1.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(obj1, key)) {
                 const fullKey = prefix ? `${prefix}.${key}` : key;
                 diffOutput.push(`Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`);
             }
