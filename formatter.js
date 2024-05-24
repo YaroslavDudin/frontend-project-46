@@ -37,7 +37,7 @@ const makePlainDiff = (obj1, obj2) => {
       if (_.isObject(value)) {
           return '[complex value]';
       }
-      return `"${value}"`;
+      return `'${value}'`;
   };
 
   const traverseObject = (obj1, obj2, prefix = '') => {
