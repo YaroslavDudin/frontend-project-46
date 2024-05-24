@@ -57,9 +57,9 @@ const makePlainDiff = (obj1, obj2) => {
     });
 
     Object.keys(obj2).forEach((key) => {
-      if (!Object.prototype.hasOwnProperty.call(obj1, key)) {
+      if (!Object.prototype.hasOwnProperty.call(obj11, key)) {
         const fullKey = prefix ? `${prefix}.${key}` : key;
-        diffOutput.push(`Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`);
+        diffOutput.push(`Property '${fullKey}' was added with value: ${formatValue(obj22[key])}`);
       }
     });
   };
