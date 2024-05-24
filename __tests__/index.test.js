@@ -10,7 +10,7 @@ describe('genDiff', () => {
   });
 });
 
-describe('genDiff', () => {
+describe('genDiff1', () => {
   test('should generate the correct diff output with proper indentation', () => {
     const obj1 = {
       common: {
