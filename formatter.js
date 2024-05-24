@@ -30,7 +30,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
   return `{\n${diffLines.join('\n')}\n${'  '.repeat(depth - 1)}}`;
 };
 
-const makePlainDiff = (obj1, obj2) => {
+const makePlainDiff = (obj11, obj22) => {
   const diffOutput = [];
 
   const formatValue = (value) => {
@@ -41,30 +41,30 @@ const makePlainDiff = (obj1, obj2) => {
     return value;
   };
 
-  const traverseObject = (obj11, obj22, prefix = '') => {
-    Object.keys(obj11).forEach((key) => {
+  const traverseObject = (obj1, obj2, prefix = '') => {
+    Object.keys(obj1).forEach((key) => {
       const fullKey = prefix ? `${prefix}.${key}` : key;
-      if (!Object.prototype.hasOwnProperty.call(obj22, key)) {
+      if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
         diffOutput.push(`Property '${fullKey}' was removed`);
-      } else if (_.isEqual(obj11[key], obj22[key])) {
+      } else if (_.isEqual(obj1[key], obj2[key])) {
         // Property exists in both objects and their values are equal
         // No action needed
-      } else if (_.isPlainObject(obj11[key]) && _.isPlainObject(obj22[key])) {
-        traverseObject(obj11[key], obj22[key], fullKey);
+      } else if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
+        traverseObject(obj1[key], obj2[key], fullKey);
       } else {
-        diffOutput.push(`Property '${fullKey}' was updated. From ${formatValue(obj11[key])} to ${formatValue(obj22[key])}`);
+        diffOutput.push(`Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}`);
       }
     });
 
     Object.keys(obj2).forEach((key) => {
-      if (!Object.prototype.hasOwnProperty.call(obj11, key)) {
+      if (!Object.prototype.hasOwnProperty.call(obj1, key)) {
         const fullKey = prefix ? `${prefix}.${key}` : key;
-        diffOutput.push(`Property '${fullKey}' was added with value: ${formatValue(obj22[key])}`);
+        diffOutput.push(`Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`);
       }
     });
   };
 
-  traverseObject(obj1, obj2);
+  traverseObject(obj11, obj22);
 
   return diffOutput.sort().join('\n');
 };
