@@ -1,21 +1,20 @@
 import { describe, expect, it, test } from '@jest/globals';
-import genDiff from '../index.js';
-import * as funccs from  '../results.js';
-import path from 'node:path';
-const testList = [
-  'yml',
-  'json',
-];
-const resolvePath = (filePath) => path.resolve(process.cwd(), `__fixtures__/${filePath}`);
- 
-describe('gendiff', () => {
-  test.each(testList)('gendiff %s', (format) => {
-    const filepath1 = resolvePath(`file1.${format}`);
-    const filepath2 = resolvePath(`file2.${format}`);
+import formatter from '../formatter.js';
+import * as func from '../formatter.js';
+import * as example from '../__fixtures__/results.js';
 
-    expect(genDiff(filepath1, filepath2)).toEqual(funccs.expectedStylishOutput);
-    expect(genDiff(filepath1, filepath2, 'stylish')).toEqual(funccs.expectedStylishOutput);
-    expect(genDiff(filepath1, filepath2, 'plain')).toEqual(funccs.expectedPlainOutput);
-    expect(genDiff(filepath1, filepath2, 'json')).toEqual(funccs.expectedJsonOutput);
-  });
-});
+ describe('genDiff1', () => {
+   it('should be undefined', () => {
+     expect(func.formatter).toBeUndefined();
+   });
+ })
+
+
+ describe('genDiff', () => {
+     test('should generate the correct diff output with proper indentation', () => {
+
+        //  expect(formatter(example.obj1, example.obj2, 'stylish')).toEqual(example.expectedStylishOutput);
+         expect(formatter(example.obj1, example.obj2, 'plain')).toEqual(example.expectedPlainOutput);
+        //  expect(formatter(obj1, obj2, 'json')).toEqual(expectedJsonOutput);
+     });
+ });

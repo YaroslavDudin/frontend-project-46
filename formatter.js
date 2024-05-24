@@ -34,7 +34,7 @@ const makePlainDiff = (obj11, obj22) => {
     const formatValue = (value) => {
       if (_.isObject(value)) {
         return '[complex value]';
-      }
+      }z
       if (typeof value === 'string') return `'${value}'`;
       return value;
     };
