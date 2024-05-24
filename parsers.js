@@ -7,4 +7,3 @@ const parse = {
 };
 
 export default ({ data, format }) => parse[format](data);
-z
