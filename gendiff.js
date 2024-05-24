@@ -14,7 +14,7 @@ program
   .argument('<filepath2>')
   .action((filepath1, filepath2) => {
     const formatName = program.opts().format;
-    const diff = genDiff(filepath1, filepath2, formatName);z
+    const diff = genDiff(filepath1, filepath2, formatName);
     console.log(diff);
   });
 
