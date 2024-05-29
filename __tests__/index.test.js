@@ -1,11 +1,11 @@
+import path from 'node:path';
 import {
-  describe, expect, it, test,
+  describe, expect, test,
 } from '@jest/globals';
 import genDiff from '../index.js';
 import resultStylish from '../__fixtures__/result';
 import resultPlain from '../__fixtures__/resultPlain.js';
 import resultJSON from '../__fixtures__/resultJSON.js';
-import path from 'node:path';
 
 const testList = [
   'yml',
