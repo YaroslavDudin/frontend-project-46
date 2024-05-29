@@ -18,4 +18,3 @@ lint:
 
 lint-fix:
 	npx eslint . --fix
-all: install lint lint-fix gendiff run test publish
