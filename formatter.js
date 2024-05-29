@@ -7,7 +7,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
     }
     return value;
   };
-  const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
+  const keys = _.union(Object.keys(obj1), Object.keys(obj2)).toSorted();
 
   const diffLines = keys.map((key) => {
     const currentDepth = '  '.repeat(depth);
