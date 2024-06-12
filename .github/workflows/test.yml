@@ -1,31 +1,26 @@
-name: Test & publish code coverage
+name: jest test
+run-name: ${{ github.actor }} running tests
 on: [push]
 jobs:
   run-defined-frontend-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
+      - run: npm ci
       - name: Run tests
-        run: npm run test
-
-      - name: Build coverage report
-        run: npm run build-coverage
-
+        run: npx stryker run
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.1.1
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.TEST_COV_ID }}
+        with:
+          coverageCommand: npx stryker run
+      - run: cc-test-reporter before-build
+      - run: cc-test-reporter after-build
