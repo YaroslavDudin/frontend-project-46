@@ -8,7 +8,9 @@
     "gendiff": "./bin/gendiff.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
+
   },
 
   "author": "luka0204",
