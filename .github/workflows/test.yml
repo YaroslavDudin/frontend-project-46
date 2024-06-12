@@ -1,33 +1,31 @@
-name: Node CI
-
-on:
-  push:
-  pull_request:
-
-env:
-  CI: true
-  CC_TEST_REPORTER_ID: <384d0da08a5564e84812aec660494dc57048e411dd5c86cb6ecf5926dee21b5b>
-
+name: Test & publish code coverage
+on: [push]
 jobs:
-  build:
+  run-defined-frontend-tests:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [20.x]
-
+        node-version: [18.x]
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: make install
-      - run: make lint
-      - run: make test
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build coverage report
+        run: before-build && after-build
+
       - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v4.0.0
-        with:
-          coverageCommand: make test-coverage
-          debug: true
+        uses: paambaati/codeclimate-action@v3.1.1
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.TEST_COV_ID }}
