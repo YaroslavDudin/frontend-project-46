@@ -18,3 +18,6 @@ lint:
 
 lint-fix:
 	npx eslint . --fix
+
+test-coverage: test
+	npm run coverage
