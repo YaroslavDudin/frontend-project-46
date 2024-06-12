@@ -15,7 +15,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - name: Run tests
-        run: npx stryker run
+        run: npm test
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.1.1
         env:
