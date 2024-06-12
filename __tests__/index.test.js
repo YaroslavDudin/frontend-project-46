@@ -11,7 +11,7 @@ const testList = [
   'yml',
   'json',
 ];
-//
+
 const resolvePath = (filePath) => path.resolve(process.cwd(), `__fixtures__/${filePath}`);
 
 describe('gendiff', () => {
