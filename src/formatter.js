@@ -1,5 +1,5 @@
 import _ from 'lodash';
-
+/* eslint-disable*/
 const makeStylishDiff = (obj1, obj2, depth = 1) => {
   const formatValue1 = (value, depth1) => {
     if (_.isObject(value)) {

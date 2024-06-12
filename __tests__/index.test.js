@@ -3,7 +3,7 @@ import {
   describe, expect, test,
 } from '@jest/globals';
 import genDiff from '../src/index.js';
-import resultStylish from '../__fixtures__/result';
+import resultStylish from '../__fixtures__/result.js';
 import resultPlain from '../__fixtures__/resultPlain.js';
 import resultJSON from '../__fixtures__/resultJSON.js';
 
