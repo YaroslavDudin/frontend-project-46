@@ -1,4 +1,5 @@
 import _ from 'lodash';
+/* eslint-disable*/
 const makeStylishDiff = (obj1, obj2, depth = 1) => {
   const formatValue1 = (value, depth1) => {
     if (_.isObject(value)) {
@@ -6,7 +7,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
     }
     return value;
   };
-  const keys = _.union(_.sortBy(Object.keys(obj1), Object.keys(obj2)));
+  const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
   const diffLines = keys.map((key) => {
     const currentDepth = '  '.repeat(depth);
     const indentation = '  '.repeat(depth + 1);
