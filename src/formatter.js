@@ -58,8 +58,7 @@ const makePlainDiff = (obj11, obj22) => {
       return `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`;
     });
 
-    return diffOutput.concat(newDiffOutput).toSorted();
-  };
+    return _.sortBy(diffOutput.concat(newDiffOutput));  };
 
   return traverseObject(obj11, obj22).join('\n');
 };
