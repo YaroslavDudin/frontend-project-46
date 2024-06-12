@@ -1,49 +1,23 @@
-name: Your Project Test
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - '!*' # Do not execute on tags
-    paths:
-      - src/*
-      - test/*
-      - '*.json'
-      - yarn.lock
-  pull_request:
-    paths:
-      - '!*.MD'
+name: jest test
+run-name: ${{ github.actor }} running tests
+on: [push]
 jobs:
-  test:
+  run-defined-frontend-tests:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [ ubuntu-latest, macOS-latest ]
-        node: [ '12', '10' ]
-    name: Test/Node ${{ matrix.node }}/${{ matrix.platform }}
-    runs-on: ${{ matrix.platform }}
+        node-version: [20.x]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node }}
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn build
-    - run: yarn test
-  coverage:
-    needs: [ test ]
-    name: Coverage
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '12'
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn build
-    - uses: paambaati/codeclimate-action@v3.1.1
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.TEST_COV_ID }}
-      with:
-        coverageCommand: yarn coverage
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v3.1.1
+        env:
+            CC_TEST_REPORTER_ID: ${{ secrets.TEST_COV_ID }}
+      - run: before-build
+      - run: npm run test
+      - run: after-build
