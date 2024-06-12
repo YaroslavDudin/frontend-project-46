@@ -23,7 +23,7 @@ jobs:
         run: npm run test
 
       - name: Build coverage report
-        run: before-build && after-build
+        run: npm run build-coverage
 
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.1.1
