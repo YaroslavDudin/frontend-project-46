@@ -17,8 +17,14 @@ test-coverage:
 	npm test -- --coverage --coverageProvider=v8
 
 
-run:
-	node gendiff ./__fixtures__/filepath1.json ./__fixtures__/filepath2.json
+run stylish:
+	node bin/gendiff -f stylish ./__fixtures__/file1.json ./__fixtures__/file2.json
+
+run plain:
+	node bin/gendiff -f plain ./__fixtures__/file1.json ./__fixtures__/file2.json
+
+run json:
+	node bin/gendiff -f json ./__fixtures__/file1.json ./__fixtures__/file2.json
 
 test:
 	npm test 
