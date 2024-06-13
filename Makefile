@@ -1,60 +1,22 @@
-.DEFAULT_GOAL := build-run
-
-install:
-	npm ci
-
-gendiff:
-	node/gendiff.js
-
-publish:
-	npm publish --dry-run
+install: install-deps
+	npx simple-git-hooks
 
 run:
-	node gendiff ./__fixtures__/filepath1.json ./__fixtures__/filepath2.json
+	bin/nodejs-package.js 10
+
+install-deps:
+	npm ci --legacy-peer-deps
 
 test:
-	npm test 
+	npm test
+
+test-coverage:
+	npm test -- --coverage --coverageProvider=v8
 
 lint:
 	npx eslint .
 
-lint-fix:
-	npx eslint . --fix
+publish:
+	npm publish
 
-test-coverage: test
-	npm run coverage
-
-setup:
-	./gradlew wrapper --gradle-version 8.5
-
-clean:
-	./gradlew clean
-
-build:
-	./gradlew clean build
-
-install:
-	./gradlew clean install
-
-run-dist:
-	./build/install/java-package/bin/java-package
-
-run:
-	./gradlew run
-
-test:
-	./gradlew test
-
-report:
-	./gradlew jacocoTestReport
-
-lint:
-	./gradlew checkstyleMain
-
-check-deps:
-	./gradlew dependencyUpdates -Drevision=release
-
-
-build-run: build run
-
-.PHONY: build
+.PHONY: test
