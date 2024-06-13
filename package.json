@@ -11,7 +11,7 @@
     "test": "jest",
     "coverage": "jest --coverage"
   },
-  "author": "luka0204",
+  "author": "Yaroslav Dudin",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.3.0",
