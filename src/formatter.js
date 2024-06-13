@@ -1,5 +1,4 @@
 import _ from 'lodash';
-
 const makeStylishDiff = (obj1, obj2, depth = 1) => {
   const formatValue1 = (value, depth1) => {
     if (_.isObject(value)) {
@@ -8,7 +7,7 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
     return value;
   };
   const keys = _.union(Object.keys(obj1), Object.keys(obj2)).toSorted();
-  const diffLines = keys.map((key) => {
+    const diffLines = keys.map((key) => {
     const currentDepth = '  '.repeat(depth);
     const indentation = '  '.repeat(depth + 1);
     if (!_.has(obj1, key)) {
@@ -38,35 +37,28 @@ const makePlainDiff = (obj11, obj22) => {
     return value;
   };
 
-  const generateDiffOutput = (obj1, obj2, prefix = '') => {
-    const diffOutput = generatePropertyDiffs(obj1, obj2, prefix);
+  const traverseObject = (obj1, obj2, prefix = '') => {
+    const diffOutput = Object.keys(obj1).reduce((acc, key) => {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+      if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
+        return acc.concat(`Property '${fullKey}' was removed`);
+      } if (_.isEqual(obj1[key], obj2[key])) {
+        return acc;
+      } if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
+        return traverseObject(obj1[key], obj2[key], fullKey).concat(acc);
+      }
+      return acc.concat(`Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}`);
+    }, []);
 
-    const newKeys = Object.keys(obj2).filter((key) => !Object.prototype.hasOwnProperty.call(obj1, key));
+    const newKeys = Object.keys(obj2).filter((key) => !Object.prototype
+      .hasOwnProperty.call(obj1, key));
     const newDiffOutput = newKeys.map((key) => {
       const fullKey = prefix ? `${prefix}.${key}` : key;
       return `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`;
     });
 
-    return diffOutput.concat(newDiffOutput).sort();
-  };
-
-  const generatePropertyDiffs = (obj1, obj2, prefix) => {
-    return Object.keys(obj1).reduce((acc, key) => {
-      const fullKey = prefix ? `${prefix}.${key}` : key;
-      if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
-        return acc.concat(`Property '${fullKey}' was removed`);
-      }
-      if (_.isEqual(obj1[key], obj2[key])) {
-        return acc;
-      }
-      if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
-        return generateDiffOutput(obj1[key], obj2[key], fullKey).concat(acc);
-      }
-      return acc.concat(`Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}`);
-    }, []);
-  };
-
-  return generateDiffOutput(obj11, obj22).join('\n');
+    return diffOutput.concat(newDiffOutput).toSorted();}
+  return traverseObject(obj11, obj22).join('\n');
 };
 
 const formatter = (data1, data2, format) => {
