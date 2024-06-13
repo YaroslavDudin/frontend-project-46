@@ -1,5 +1,4 @@
 import _ from 'lodash';
-/* eslint-disable*/
 const makeStylishDiff = (obj1, obj2, depth = 1) => {
   const formatValue1 = (value, depth1) => {
     if (_.isObject(value)) {
@@ -7,8 +6,8 @@ const makeStylishDiff = (obj1, obj2, depth = 1) => {
     }
     return value;
   };
-  const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
-  const diffLines = keys.map((key) => {
+  const keys = _.union(Object.keys(obj1), Object.keys(obj2)).toSorted();
+    const diffLines = keys.map((key) => {
     const currentDepth = '  '.repeat(depth);
     const indentation = '  '.repeat(depth + 1);
     if (!_.has(obj1, key)) {
@@ -58,8 +57,7 @@ const makePlainDiff = (obj11, obj22) => {
       return `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`;
     });
 
-    return _.sortBy(diffOutput.concat(newDiffOutput));  };
-
+    return diffOutput.concat(newDiffOutput).toSorted();}
   return traverseObject(obj11, obj22).join('\n');
 };
 
