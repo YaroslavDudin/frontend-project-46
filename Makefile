@@ -1,8 +1,11 @@
-install: install-deps
-	npx simple-git-hooks
+install:
+	npm ci
 
-run:
-	bin/nodejs-package.js 10
+gendiff:
+	node/gendiff.js
+
+publish:
+	npm publish --dry-run
 
 install-deps:
 	npm ci --legacy-peer-deps
@@ -13,10 +16,17 @@ test:
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
 
+
+run:
+	node gendiff ./__fixtures__/filepath1.json ./__fixtures__/filepath2.json
+
+test:
+	npm test 
+
 lint:
 	npx eslint .
 
-publish:
-	npm publish
+lint-fix:
+	npx eslint . --fix
 
-.PHONY: test
+
