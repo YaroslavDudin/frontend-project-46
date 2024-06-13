@@ -102,5 +102,6 @@ Property 'group3' was added with value: [complex value]
 ```bash
 node bin/gendiff.js -f json ./__fixtures__/file1.json ./__fixtures__/file2.json
 ```
+```
 {"common":{"setting1":"Value 1","setting2":200,"setting3":true,"setting6":{"key":"value","doge":{"wow":""}}},"group1":{"baz":"bas","foo":"bar","nest":{"key":"value"}},"group2":{"abc":12345,"deep":{"id":45}}}
 ```
