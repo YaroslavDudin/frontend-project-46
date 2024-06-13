@@ -38,21 +38,22 @@ const makePlainDiff = (obj11, obj22) => {
     return value;
   };
 
-  const traverseObject = (obj1, obj2, prefix = '') => {
+  const generateDiffOutput = (obj1, obj2, prefix = '') => {
     const diffOutput = Object.keys(obj1).reduce((acc, key) => {
       const fullKey = prefix ? `${prefix}.${key}` : key;
       if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
         return acc.concat(`Property '${fullKey}' was removed`);
-      } if (_.isEqual(obj1[key], obj2[key])) {
+      }
+      if (_.isEqual(obj1[key], obj2[key])) {
         return acc;
-      } if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
-        return traverseObject(obj1[key], obj2[key], fullKey).concat(acc);
+      }
+      if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
+        return generateDiffOutput(obj1[key], obj2[key], fullKey).concat(acc);
       }
       return acc.concat(`Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}`);
     }, []);
 
-    const newKeys = Object.keys(obj2).filter((key) => !Object.prototype
-      .hasOwnProperty.call(obj1, key));
+    const newKeys = Object.keys(obj2).filter((key) => !Object.prototype.hasOwnProperty.call(obj1, key));
     const newDiffOutput = newKeys.map((key) => {
       const fullKey = prefix ? `${prefix}.${key}` : key;
       return `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`;
@@ -60,7 +61,8 @@ const makePlainDiff = (obj11, obj22) => {
 
     return diffOutput.concat(newDiffOutput).toSorted();
   };
-  return traverseObject(obj11, obj22).join('\n');
+
+  return generateDiffOutput(obj11, obj22).join('\n');
 };
 
 const formatter = (data1, data2, format) => {
