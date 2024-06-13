@@ -53,7 +53,8 @@ const makePlainDiff = (obj11, obj22) => {
       return acc.concat(`Property '${fullKey}' was updated. From ${formatValue(obj1[key])} to ${formatValue(obj2[key])}`);
     }, []);
 
-    const newKeys = Object.keys(obj2).filter((key) => !Object.prototype.hasOwnProperty.call(obj1, key));
+    const newKeys = Object.keys(obj2).filter((key) => !Object.prototype
+    .hasOwnProperty.call(obj1, key));
     const newDiffOutput = newKeys.map((key) => {
       const fullKey = prefix ? `${prefix}.${key}` : key;
       return `Property '${fullKey}' was added with value: ${formatValue(obj2[key])}`;
