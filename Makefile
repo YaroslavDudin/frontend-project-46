@@ -11,8 +11,7 @@ install-deps:
 	npm ci --legacy-peer-deps
 
 test-coverage:
-	npm test -- --coverage --coverageProvider=v8
-
+	npx jest --coverage
 
 run-stylish:
 	node bin/gendiff -f stylish ./__fixtures__/file1.json ./__fixtures__/file2.json
