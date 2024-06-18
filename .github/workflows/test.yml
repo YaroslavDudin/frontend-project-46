@@ -30,4 +30,4 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: 384d0da08a5564e84812aec660494dc57048e411dd5c86cb6ecf5926dee21b5b
       with:
-        coverageCommand: yarn coverage
+        coverageCommand: 	npx jest --coverage
