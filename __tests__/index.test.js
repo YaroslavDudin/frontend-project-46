@@ -1,4 +1,4 @@
-import path from 'node:path';
+import {path} from 'node:path';
 import {
   describe, expect, test,
 } from '@jest/globals';

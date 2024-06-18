@@ -1,4 +1,4 @@
-import { path } from 'node:path';
+import  path  from 'node:path';
 import { readFileSync } from 'node:fs';
 import parser from './parsers.js';
 import formatter from './formatter.js';
